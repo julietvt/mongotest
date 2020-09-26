@@ -31,9 +31,22 @@ const userSchema = new Schema({
         required: true,
         unique: true,
         validate: {
-            validator: value => emailValidSchema.validate(value);
+            validator: value => emailValidSchema.validate(value),
         }
     }
     });
 
+const User = mongoose.model('User',userSchema);
+
+function insertUser(body) {
+    const user = new User(body);
+    user.save().then(console.log).catch(console.error);
+}
+
+insertUser({
+    firstName: 'NewUser2',
+    lastName: "NewSurnameUser2",
+    email: 'newuser2@gmail.com',
+    role: 'USER',
+});
 
