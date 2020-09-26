@@ -1,15 +1,9 @@
-const db = require('./db');
-const User = require('./models/user.model');
+const express = require('express');
+const router = require('./router');
+const app = express();
+const PORT = process.env.PORT || 3000;
+app.use(express.json());
+app.use('/api',router);
+app.listen(PORT,()=> {console.log(`Server started on port ${PORT}`);});
 
-function insertUser(body) {
-    const user_obj = new User(body);
-    user_obj.save().then(console.log).catch(console.error);
-}
-
-insertUser({
-    firstName: 'NewUser3',
-    lastName: "NewSurnameUser3",
-    email: 'newuser3@gmail.com',
-    role: 'ADMIN',
-});
 
