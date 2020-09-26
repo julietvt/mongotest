@@ -1,16 +1,30 @@
-//console.log("Hello Mongo!!!");
-
 const mongoose = require('mongoose');
 const db = mongoose.connection;
-
-db.on('error', () => {
-    process.exit(1);
+const Schema = mongoose.Schema;
+const userSchema = new Schema({
+    firstName: {
+        type: String,
+        minLength: 1,
+    },
+    lastName: {
+        type: String,
+        minLength: 1,
+    },
+    role: {
+        type: String,
+        enum: ['USER', 'MODERATOR', 'ADMIN'],
+        required: true,
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+    },
 });
-db.once('open', function() {
-    console.log('connected');
-});
-
 mongoose.connect('mongodb://localhost:27017/pd2020_dbtest',{
     useNewUrlParser: true,
     useUnifiedTopology: true,
+}, function (err) {
+    if(err){console.log("Error connection");}
+    else{console.log("Success connection!");}
 });
