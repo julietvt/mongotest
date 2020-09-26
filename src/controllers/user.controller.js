@@ -1,11 +1,14 @@
 const User = require('./../models/user.model');
 module.exports.postUser = async(req,res,next) => {
     try{
+        console.log('ok')
         const user = new User(req.body);
         const newUser = await user.save();
         if(newUser) { return res.status(201).send(newUser);}
         res.status(400).send('Bad request');
-    } catch(e){next(e);}
+    } catch(e){
+        console.log(e)
+        next(e);}
 };
 module.exports.getUser = async(req,res,next) => {
     try{
